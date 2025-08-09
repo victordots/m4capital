@@ -177,15 +177,84 @@
             0% { background-position: 100% 0; }
             100% { background-position: -100% 0; }
         }
+
+        /* Live Forex Ticker Banner Styles */
+        .forex-ticker {
+            background: linear-gradient(90deg, #1a1a2e, #2d2d44);
+            border-bottom: 1px solid #3a3a5c;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .ticker-content {
+            display: inline-flex;
+            animation: scroll-left 60s linear infinite;
+        }
+        
+        @keyframes scroll-left {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 3rem;
+            padding: 0.5rem 0;
+        }
+        
+        .price-up {
+            color: #22c55e;
+        }
+        
+        .price-down {
+            color: #ef4444;
+        }
+        
+        .price-neutral {
+            color: #6b7280;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-dark bg-opacity-80 backdrop-filter backdrop-blur-md p-4 flex justify-between items-center border-b border-indigo-900">
         <div class="flex items-center cursor-pointer" onclick="showLandingPage()">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/26785b46-bf37-4fad-96e8-8d32d831d2d8.png" alt="Brand logo of ForexPro with a stylized F and P forming a currency symbol" class="currency-icon h-10 w-10 rounded-full mr-2">
-            <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ForexPro</span>
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/26785b46-bf37-4fad-96e8-8d32d831d2d8.png" alt="m4capital logo" class="currency-icon h-10 w-10 rounded-full mr-2">
+            <span class="text-xl font-bold text-white">m4capital</span>
         </div>
+        <!-- Main Navigation Menu -->
+        <div class="hidden md:flex items-center space-x-6">
+            <a href="#" onclick="showMarkets()" class="text-white hover:text-accent transition-colors">Markets</a>
+            <a href="#" onclick="showTrading()" class="text-white hover:text-accent transition-colors">Trade</a>
+            <a href="#" onclick="showAnalysis()" class="text-white hover:text-accent transition-colors">Analysis</a>
+            <a href="#" onclick="showEducation()" class="text-white hover:text-accent transition-colors">Education</a>
+        </div>
+        
+        <!-- User Profile Section (shown when logged in) -->
+        <div id="user-profile-section" class="hidden flex items-center space-x-4">
+            <div class="text-sm text-white">
+                <div class="text-xs text-gray-300">Balance</div>
+                <div class="font-semibold">$24,891.42</div>
+            </div>
+            <button class="text-yellow-400 hover:text-yellow-300 transition-colors relative">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                </svg>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+            </button>
+            <button onclick="showDeposit()" class="btn px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                Deposit
+            </button>
+            <button onclick="showWithdraw()" class="btn px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                Withdraw
+            </button>
+            <button onclick="showProfile()" class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                JD
+            </button>
+        </div>
+        
+        <!-- Login/Register Buttons (shown when not logged in) -->
         <div id="nav-buttons" class="flex items-center space-x-4">
             <a href="#" onclick="showLoginSection()" class="btn px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-semibold shadow-lg hover:from-secondary hover:to-primary">
                 Login
@@ -203,6 +272,13 @@
         </div>
     </nav>
 
+    <!-- Live Forex Ticker Banner -->
+    <div class="forex-ticker fixed top-16 left-0 right-0 z-40 py-2">
+        <div class="ticker-content" id="forex-ticker-content">
+            <!-- Forex pairs will be populated by JavaScript -->
+        </div>
+    </div>
+
     <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 bg-dark bg-opacity-95 shadow-lg z-50">
         <div class="flex flex-col space-y-1 p-2">
@@ -216,7 +292,7 @@
     </div>
 
     <!-- Main Content Container -->
-    <div id="main-content-container" class="relative pt-16 h-screen overflow-x-hidden flex-grow">
+    <div id="main-content-container" class="relative pt-24 h-screen overflow-x-hidden flex-grow">
         <!-- Landing Page Section -->
         <section id="landing-section" class="hero-section flex-grow flex items-center justify-center text-center py-20 md:py-32">
             <div class="content-wrapper container mx-auto px-4">
@@ -948,6 +1024,60 @@
         const bottomNav = document.getElementById('bottom-nav');
         const mainFooter = document.getElementById('main-footer');
         const resetPasswordSlide = document.getElementById('reset-password-slide'); // NEW
+        const forexTickerContent = document.getElementById('forex-ticker-content');
+        const userProfileSection = document.getElementById('user-profile-section');
+
+        // Forex ticker data
+        const forexPairs = [
+            { pair: 'EUR/USD', price: 1.0856, change: 0.0012, changePercent: 0.11 },
+            { pair: 'GBP/USD', price: 1.2645, change: -0.0023, changePercent: -0.18 },
+            { pair: 'USD/JPY', price: 149.45, change: 0.85, changePercent: 0.57 },
+            { pair: 'AUD/USD', price: 0.6534, change: 0.0045, changePercent: 0.69 },
+            { pair: 'USD/CAD', price: 1.3567, change: -0.0012, changePercent: -0.09 },
+            { pair: 'USD/CHF', price: 0.8892, change: 0.0034, changePercent: 0.38 },
+            { pair: 'NZD/USD', price: 0.5987, change: 0.0067, changePercent: 1.13 },
+            { pair: 'EUR/GBP', price: 0.8587, change: 0.0023, changePercent: 0.27 },
+            { pair: 'EUR/JPY', price: 162.34, change: 1.23, changePercent: 0.76 },
+            { pair: 'GBP/JPY', price: 189.12, change: -0.89, changePercent: -0.47 },
+            { pair: 'XAU/USD', price: 2034.56, change: 12.45, changePercent: 0.62 },
+            { pair: 'XAG/USD', price: 24.87, change: -0.34, changePercent: -1.35 },
+            { pair: 'BTC/USD', price: 43256.78, change: 1234.56, changePercent: 2.94 },
+            { pair: 'ETH/USD', price: 2587.43, change: -45.67, changePercent: -1.73 }
+        ];
+
+        // Initialize forex ticker
+        const initForexTicker = () => {
+            if (!forexTickerContent) return;
+            
+            const tickerItems = forexPairs.map(item => {
+                const changeClass = item.change > 0 ? 'price-up' : item.change < 0 ? 'price-down' : 'price-neutral';
+                const changeSymbol = item.change > 0 ? '+' : '';
+                
+                return `
+                    <div class="ticker-item">
+                        <span class="text-white font-medium mr-2">${item.pair}</span>
+                        <span class="text-white mr-2">${item.price.toFixed(item.pair.includes('JPY') ? 2 : 4)}</span>
+                        <span class="${changeClass} text-sm">
+                            ${changeSymbol}${item.change.toFixed(4)} (${changeSymbol}${item.changePercent.toFixed(2)}%)
+                        </span>
+                    </div>
+                `;
+            }).join('');
+            
+            forexTickerContent.innerHTML = tickerItems + tickerItems; // Duplicate for seamless loop
+        };
+
+        // Update forex ticker with random price movements
+        const updateForexTicker = () => {
+            forexPairs.forEach(pair => {
+                const volatility = 0.001; // 0.1% volatility
+                const randomChange = (Math.random() - 0.5) * 2 * volatility;
+                pair.change = randomChange * pair.price;
+                pair.changePercent = randomChange * 100;
+                pair.price += pair.change;
+            });
+            initForexTicker();
+        };
 
         // Function to hide all main content sections
         const hideAllSections = () => {
@@ -971,7 +1101,7 @@
             ctaSection.classList.remove('hidden');
             mainFooter.classList.remove('hidden');
 
-            navButtons.classList.remove('hidden');
+            hideUserProfile(); // Hide user profile section when showing landing page
             mobileMenuToggle.classList.add('hidden');
             bottomNav.classList.add('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden if open
@@ -1033,7 +1163,7 @@
             // Animate in
             gsap.fromTo(dashboardSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
 
-            navButtons.classList.add('hidden');
+            showUserProfile(); // Show user profile section when logged in
             mobileMenuToggle.classList.remove('hidden');
             bottomNav.classList.remove('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden
@@ -1045,7 +1175,7 @@
             // Animate in
             gsap.fromTo(tradingSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
 
-            navButtons.classList.add('hidden');
+            showUserProfile(); // Show user profile section when logged in
             mobileMenuToggle.classList.remove('hidden');
             bottomNav.classList.remove('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden
@@ -1320,14 +1450,54 @@
             }
         };
 
+        // Navigation functions for new menu items
+        const showMarkets = () => {
+            // Placeholder for Markets section
+            alert('Markets section - Coming soon!');
+        };
+
+        const showAnalysis = () => {
+            // Placeholder for Analysis section
+            alert('Analysis section - Coming soon!');
+        };
+
+        const showEducation = () => {
+            // Placeholder for Education section
+            alert('Education section - Coming soon!');
+        };
+
+        const showDeposit = () => {
+            // Placeholder for Deposit functionality
+            alert('Deposit functionality - Coming soon!');
+        };
+
+        const showWithdraw = () => {
+            // Placeholder for Withdraw functionality
+            alert('Withdraw functionality - Coming soon!');
+        };
+
+        // Function to show user profile section (when logged in)
+        const showUserProfile = () => {
+            navButtons.classList.add('hidden');
+            userProfileSection.classList.remove('hidden');
+        };
+
+        // Function to hide user profile section (when logged out)
+        const hideUserProfile = () => {
+            navButtons.classList.remove('hidden');
+            userProfileSection.classList.add('hidden');
+        };
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             showLandingPage(); // Start with the landing page
+            initForexTicker(); // Initialize forex ticker
             init3DView();
             initTradingChart();
             animateElements();
             fetchCryptoPrices();
             setInterval(fetchCryptoPrices, 60000); // Update every minute
+            setInterval(updateForexTicker, 5000); // Update forex ticker every 5 seconds
 
             // Sample login form validation
             document.getElementById('login-form').addEventListener('submit', (e) => {
