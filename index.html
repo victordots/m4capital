@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForexPro - Your Premier Trading Platform</title>
+    <title>m4capital - Your Premier Trading Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -177,15 +177,152 @@
             0% { background-position: 100% 0; }
             100% { background-position: -100% 0; }
         }
+
+        /* Live Forex Ticker Banner Styles */
+        .forex-ticker {
+            background: linear-gradient(90deg, #1a1a2e, #2d2d44);
+            border-bottom: 1px solid #3a3a5c;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .ticker-content {
+            display: inline-flex;
+            animation: scroll-left 60s linear infinite;
+        }
+        
+        @keyframes scroll-left {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 3rem;
+            padding: 0.5rem 0;
+        }
+        
+        .price-up {
+            color: #22c55e;
+        }
+        
+        .price-down {
+            color: #ef4444;
+        }
+        
+        .price-neutral {
+            color: #6b7280;
+        }
+
+        /* Hero Slider Styles */
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slider-container {
+            position: relative;
+            width: 500%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .slider-slide {
+            width: 20%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .slide-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 3;
+        }
+        
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .slide-dot.active {
+            background: white;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-dark bg-opacity-80 backdrop-filter backdrop-blur-md p-4 flex justify-between items-center border-b border-indigo-900">
         <div class="flex items-center cursor-pointer" onclick="showLandingPage()">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/26785b46-bf37-4fad-96e8-8d32d831d2d8.png" alt="Brand logo of ForexPro with a stylized F and P forming a currency symbol" class="currency-icon h-10 w-10 rounded-full mr-2">
-            <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ForexPro</span>
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/26785b46-bf37-4fad-96e8-8d32d831d2d8.png" alt="m4capital logo" class="currency-icon h-10 w-10 rounded-full mr-2">
+            <span class="text-xl font-bold text-white">m4capital</span>
         </div>
+        <!-- Main Navigation Menu -->
+        <div class="hidden md:flex items-center space-x-6">
+            <a href="#" onclick="showMarkets()" class="text-white hover:text-accent transition-colors">Markets</a>
+            <a href="#" onclick="showTrading()" class="text-white hover:text-accent transition-colors">Trade</a>
+            <a href="#" onclick="showAnalysis()" class="text-white hover:text-accent transition-colors">Analysis</a>
+            <a href="#" onclick="showEducation()" class="text-white hover:text-accent transition-colors">Education</a>
+        </div>
+        
+        <!-- User Profile Section (shown when logged in) -->
+        <div id="user-profile-section" class="hidden flex items-center space-x-4">
+            <div class="text-sm text-white">
+                <div class="text-xs text-gray-300">Balance</div>
+                <div class="font-semibold">$24,891.42</div>
+            </div>
+            <button class="text-yellow-400 hover:text-yellow-300 transition-colors relative">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                </svg>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+            </button>
+            <button onclick="showDeposit()" class="btn px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                Deposit
+            </button>
+            <button onclick="showWithdraw()" class="btn px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                Withdraw
+            </button>
+            <button onclick="showProfile()" class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                JD
+            </button>
+        </div>
+        
+        <!-- Login/Register Buttons (shown when not logged in) -->
         <div id="nav-buttons" class="flex items-center space-x-4">
             <a href="#" onclick="showLoginSection()" class="btn px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-semibold shadow-lg hover:from-secondary hover:to-primary">
                 Login
@@ -203,6 +340,13 @@
         </div>
     </nav>
 
+    <!-- Live Forex Ticker Banner -->
+    <div class="forex-ticker fixed top-16 left-0 right-0 z-40 py-2">
+        <div class="ticker-content" id="forex-ticker-content">
+            <!-- Forex pairs will be populated by JavaScript -->
+        </div>
+    </div>
+
     <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 bg-dark bg-opacity-95 shadow-lg z-50">
         <div class="flex flex-col space-y-1 p-2">
@@ -216,31 +360,130 @@
     </div>
 
     <!-- Main Content Container -->
-    <div id="main-content-container" class="relative pt-16 h-screen overflow-x-hidden flex-grow">
+    <div id="main-content-container" class="relative pt-24 h-screen overflow-x-hidden flex-grow">
         <!-- Landing Page Section -->
-        <section id="landing-section" class="hero-section flex-grow flex items-center justify-center text-center py-20 md:py-32">
-            <div class="content-wrapper container mx-auto px-4">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Trade Smarter, Not Harder.
-                </h1>
-                <p class="text-lg md:text-xl text-indigo-200 mb-10 max-w-3xl mx-auto">
-                    Unlock the power of global markets with ForexPro. Real-time data, advanced tools, and secure trading at your fingertips.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#" onclick="showLoginSection()" class="btn px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-primary transform hover:scale-105">
-                        Start Trading Now
-                    </a>
-                    <a href="#" class="btn px-8 py-4 border-2 border-accent text-accent rounded-full font-bold text-lg hover:bg-accent hover:text-white transform hover:scale-105">
-                        Learn More
-                    </a>
+        <section id="landing-section" class="hero-slider">
+            <div class="slider-container" id="slider-container">
+                <!-- Slide 1: Advanced Trading Charts -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%233b82f6&quot; opacity=&quot;0.1&quot;><path d=&quot;M100 400L300 300L500 350L700 250L900 200L1100 300L1300 150L1500 250L1700 200L1900 300&quot; stroke=&quot;%233b82f6&quot; stroke-width=&quot;3&quot; fill=&quot;none&quot;/><circle cx=&quot;100&quot; cy=&quot;400&quot; r=&quot;5&quot;/><circle cx=&quot;300&quot; cy=&quot;300&quot; r=&quot;5&quot;/><circle cx=&quot;500&quot; cy=&quot;350&quot; r=&quot;5&quot;/><circle cx=&quot;700&quot; cy=&quot;250&quot; r=&quot;5&quot;/><circle cx=&quot;900&quot; cy=&quot;200&quot; r=&quot;5&quot;/><circle cx=&quot;1100&quot; cy=&quot;300&quot; r=&quot;5&quot;/><circle cx=&quot;1300&quot; cy=&quot;150&quot; r=&quot;5&quot;/><circle cx=&quot;1500&quot; cy=&quot;250&quot; r=&quot;5&quot;/><circle cx=&quot;1700&quot; cy=&quot;200&quot; r=&quot;5&quot;/><circle cx=&quot;1900&quot; cy=&quot;300&quot; r=&quot;5&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Advanced Trading Charts
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Professional-grade charting tools with real-time data visualization and technical analysis
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showLoginSection()" class="btn px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-primary transform hover:scale-105">
+                                Start Trading Now
+                            </a>
+                            <a href="#" onclick="showEducation()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Slide 2: Forex Trading -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%23f59e0b&quot;><text x=&quot;200&quot; y=&quot;200&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>EUR</text><text x=&quot;600&quot; y=&quot;300&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>USD</text><text x=&quot;1200&quot; y=&quot;250&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>GBP</text><text x=&quot;300&quot; y=&quot;600&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>JPY</text><text x=&quot;1000&quot; y=&quot;700&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>AUD</text></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Forex Market Access
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Trade major, minor, and exotic currency pairs with tight spreads and instant execution
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showMarkets()" class="btn px-8 py-4 bg-gradient-to-r from-accent to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-accent transform hover:scale-105">
+                                View Markets
+                            </a>
+                            <a href="#" onclick="showTrading()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Start Trading
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Portfolio Management -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g><rect x=&quot;300&quot; y=&quot;300&quot; width=&quot;200&quot; height=&quot;400&quot; fill=&quot;%2322c55e&quot; opacity=&quot;0.2&quot;/><rect x=&quot;600&quot; y=&quot;200&quot; width=&quot;200&quot; height=&quot;500&quot; fill=&quot;%233b82f6&quot; opacity=&quot;0.2&quot;/><rect x=&quot;900&quot; y=&quot;400&quot; width=&quot;200&quot; height=&quot;300&quot; fill=&quot;%23f59e0b&quot; opacity=&quot;0.2&quot;/><rect x=&quot;1200&quot; y=&quot;250&quot; width=&quot;200&quot; height=&quot;450&quot; fill=&quot;%23ef4444&quot; opacity=&quot;0.2&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Portfolio Management
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Track your investments, analyze performance, and manage risk with our comprehensive dashboard
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showDashboard()" class="btn px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-blue-600 hover:to-green-600 transform hover:scale-105">
+                                View Dashboard
+                            </a>
+                            <a href="#" onclick="showAnalysis()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Analyze Performance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Educational Resources -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%238338ec&quot; opacity=&quot;0.15&quot;><circle cx=&quot;400&quot; cy=&quot;300&quot; r=&quot;80&quot;/><circle cx=&quot;800&quot; cy=&quot;400&quot; r=&quot;60&quot;/><circle cx=&quot;1200&quot; cy=&quot;250&quot; r=&quot;100&quot;/><circle cx=&quot;600&quot; cy=&quot;600&quot; r=&quot;70&quot;/><circle cx=&quot;1400&quot; cy=&quot;500&quot; r=&quot;90&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Learn & Grow
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Access comprehensive educational resources, market analysis, and trading strategies
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showEducation()" class="btn px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-pink-600 hover:to-purple-600 transform hover:scale-105">
+                                Start Learning
+                            </a>
+                            <a href="#" onclick="showAnalysis()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Market Analysis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Security & Trust -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%2322c55e&quot; opacity=&quot;0.1&quot;><polygon points=&quot;960,200 1100,400 960,600 820,400&quot;/><polygon points=&quot;500,300 600,450 500,600 400,450&quot;/><polygon points=&quot;1400,250 1500,400 1400,550 1300,400&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Secure & Trusted
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Your funds and data are protected with bank-level security and regulatory compliance
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showRegisterSection()" class="btn px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-teal-600 hover:to-green-600 transform hover:scale-105">
+                                Open Account
+                            </a>
+                            <a href="#" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Security Info
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="slide-dots" id="slide-dots">
+                <div class="slide-dot active" onclick="goToSlide(0)"></div>
+                <div class="slide-dot" onclick="goToSlide(1)"></div>
+                <div class="slide-dot" onclick="goToSlide(2)"></div>
+                <div class="slide-dot" onclick="goToSlide(3)"></div>
+                <div class="slide-dot" onclick="goToSlide(4)"></div>
             </div>
         </section>
 
         <!-- Features Section (from landing page) -->
         <section id="features-section" class="py-16 bg-dark">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-light">Why Choose ForexPro?</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-light">Why Choose m4capital?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="feature-card p-8 rounded-2xl border border-indigo-800 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-primary mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -272,7 +515,7 @@
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Trading Journey?</h2>
                 <p class="text-lg text-indigo-100 mb-8 max-w-2xl mx-auto">
-                    Join thousands of traders who trust ForexPro for their financial success.
+                    Join thousands of traders who trust m4capital for their financial success.
                 </p>
                 <a href="#" onclick="showRegisterSection()" class="btn px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-semibold shadow-lg hover:from-secondary hover:to-primary">
                     Sign Up Free
@@ -585,108 +828,36 @@
                     </div>
                 </div>
 
-                <!-- Assets Grid -->
+                <!-- Comprehensive Watchlist -->
                 <div class="mb-8">
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-semibold text-light">Your Assets</h2>
-                        <button class="btn text-sm text-primary hover:underline">View All</button>
+                        <h2 class="text-xl font-semibold text-light">Comprehensive Watchlist</h2>
+                        <div class="flex items-center space-x-4">
+                            <select id="watchlist-filter" class="bg-dark border border-indigo-700 text-white rounded px-3 py-1 text-sm">
+                                <option value="all">All Instruments</option>
+                                <option value="forex">Forex Pairs</option>
+                                <option value="crypto">Cryptocurrency</option>
+                                <option value="commodities">Commodities</option>
+                                <option value="indices">Indices</option>
+                            </select>
+                            <button class="btn text-sm text-primary hover:underline">View All</button>
+                        </div>
                     </div>
 
-                    <div class="dashboard-grid grid grid-cols-2 gap-4">
-                        <!-- Asset Card 1 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c981ddbd-d333-493c-aa48-ce7a0e569200.png" alt="Bitcoin BTC logo" class="h-6 w-6">
-                                        <span class="font-medium text-light" data-pair="BTC-USD">BTC/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Bitcoin</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary asset-price">$23,456.78</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+1.23%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
+                    <!-- Search and Sort Controls -->
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex-1">
+                            <input type="text" id="watchlist-search" placeholder="Search instruments..." class="w-full bg-dark border border-indigo-700 text-white rounded px-3 py-2 text-sm">
                         </div>
+                        <button id="sort-name" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Name</button>
+                        <button id="sort-price" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Price</button>
+                        <button id="sort-change" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Change</button>
+                    </div>
 
-                        <!-- Asset Card 2 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9f94bff5-1345-4537-84fb-82ffd505406f.png" alt="Ethereum ETH logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">ETH/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Ethereum</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">$1,789.23</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+3.45%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
-
-                        <!-- Asset Card 3 - Add more cards for other currencies -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9cc4ef04-f66b-49ad-9cf3-01ecf3765679.png" alt="EUR/USD Forex pair logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">EUR/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Euro/Dollar</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">1.0956</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                        </svg>
-                                        <span class="text-xs text-red-400 ml-1">-0.12%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
-
-                        <!-- Asset Card 4 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fc84d3cd-e078-42c9-ac5d-f32ae1b4ef6c.png" alt="Gold XAU logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">XAU/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Gold</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">$1,980.45</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+0.78%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
+                    <div id="watchlist-container" class="space-y-2 max-h-96 overflow-y-auto">
+                        <!-- Watchlist items will be populated by JavaScript -->
                     </div>
                 </div>
-
                 <!-- Recent Activity -->
                 <div class="mb-8">
                     <h2 class="text-xl font-semibold text-light mb-4">Recent Activity</h2>
@@ -805,26 +976,38 @@
             <div class="container mx-auto px-4 py-8 h-full">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl md:text-3xl font-bold text-light">3D Trading Terminal</h2>
-                    <select class="bg-dark border border-indigo-700 text-black rounded-lg px-3 py-2" onchange="updateTradingPair(this.value)">
-                        <option value="BTC/USD" selected>BTC/USD</option>
-                        <option value="ETH/USD">ETH/USD</option>
-                        <option value="EUR/USD">EUR/USD</option>
-                        <option value="XAU/USD">XAU/USD</option>
+                    <select class="bg-dark border border-indigo-700 text-black rounded-lg px-3 py-2" onchange="updateTradingSymbol(this.value)">
+                        <option value="EURUSD" selected>EUR/USD</option>
+                        <option value="GBPUSD">GBP/USD</option>
+                        <option value="USDJPY">USD/JPY</option>
+                        <option value="AUDUSD">AUD/USD</option>
+                        <option value="USDCAD">USD/CAD</option>
+                        <option value="USDCHF">USD/CHF</option>
+                        <option value="NZDUSD">NZD/USD</option>
+                        <option value="XAUUSD">XAU/USD</option>
+                        <option value="BTCUSD">BTC/USD</option>
+                        <option value="ETHUSD">ETH/USD</option>
                     </select>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-5/6">
-                    <!-- 3D Chart Container -->
+                    <!-- TradingView Chart Container -->
                     <div class="lg:col-span-2 bg-dark bg-opacity-70 rounded-xl border border-indigo-800 p-4">
-                        <div id="trading-chart-3d" class="w-full h-full"></div>
+                        <div id="tradingview-widget" class="w-full h-full"></div>
                         <div class="flex justify-between mt-3">
-                            <div class="text-indigo-300">1D • 1W • 1M • 3M • 1Y</div>
+                            <div class="text-indigo-300">
+                                <button onclick="changeTimeframe('1D')" class="hover:text-white mr-2">1D</button> •
+                                <button onclick="changeTimeframe('1W')" class="hover:text-white mx-2">1W</button> •
+                                <button onclick="changeTimeframe('1M')" class="hover:text-white mx-2">1M</button> •
+                                <button onclick="changeTimeframe('3M')" class="hover:text-white mx-2">3M</button> •
+                                <button onclick="changeTimeframe('1Y')" class="hover:text-white ml-2">1Y</button>
+                            </div>
                             <div class="flex space-x-2">
-                                <button class="p-1 bg-indigo-800 rounded">
+                                <button onclick="toggleFullscreen()" class="p-1 bg-indigo-800 rounded hover:bg-indigo-700">
                                     <svg class="w-5 h-5 text-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                                 </button>
-                                <button class="p-1 bg-indigo-800 rounded">
-                                    <svg class="w-5 h-5 text-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <button onclick="toggleIndicators()" class="p-1 bg-indigo-800 rounded hover:bg-indigo-700">
+                                    <svg class="w-5 h-5 text-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                                 </button>
                             </div>
                         </div>
@@ -918,7 +1101,7 @@
     <!-- Footer -->
     <footer id="main-footer" class="bg-dark py-8 border-t border-indigo-900">
         <div class="container mx-auto px-4 text-center text-indigo-400">
-            <p>&copy; 2024 ForexPro. All rights reserved.</p>
+            <p>&copy; 2024 m4capital. All rights reserved.</p>
             <div class="flex justify-center space-x-4 mt-4">
                 <a href="#" class="hover:text-light">Privacy Policy</a>
                 <span class="text-indigo-600">|</span>
@@ -948,6 +1131,100 @@
         const bottomNav = document.getElementById('bottom-nav');
         const mainFooter = document.getElementById('main-footer');
         const resetPasswordSlide = document.getElementById('reset-password-slide'); // NEW
+        const forexTickerContent = document.getElementById('forex-ticker-content');
+        const userProfileSection = document.getElementById('user-profile-section');
+
+        // Forex ticker data
+        const forexPairs = [
+            { pair: 'EUR/USD', price: 1.0856, change: 0.0012, changePercent: 0.11 },
+            { pair: 'GBP/USD', price: 1.2645, change: -0.0023, changePercent: -0.18 },
+            { pair: 'USD/JPY', price: 149.45, change: 0.85, changePercent: 0.57 },
+            { pair: 'AUD/USD', price: 0.6534, change: 0.0045, changePercent: 0.69 },
+            { pair: 'USD/CAD', price: 1.3567, change: -0.0012, changePercent: -0.09 },
+            { pair: 'USD/CHF', price: 0.8892, change: 0.0034, changePercent: 0.38 },
+            { pair: 'NZD/USD', price: 0.5987, change: 0.0067, changePercent: 1.13 },
+            { pair: 'EUR/GBP', price: 0.8587, change: 0.0023, changePercent: 0.27 },
+            { pair: 'EUR/JPY', price: 162.34, change: 1.23, changePercent: 0.76 },
+            { pair: 'GBP/JPY', price: 189.12, change: -0.89, changePercent: -0.47 },
+            { pair: 'XAU/USD', price: 2034.56, change: 12.45, changePercent: 0.62 },
+            { pair: 'XAG/USD', price: 24.87, change: -0.34, changePercent: -1.35 },
+            { pair: 'BTC/USD', price: 43256.78, change: 1234.56, changePercent: 2.94 },
+            { pair: 'ETH/USD', price: 2587.43, change: -45.67, changePercent: -1.73 }
+        ];
+
+        // Initialize forex ticker
+        const initForexTicker = () => {
+            if (!forexTickerContent) return;
+            
+            const tickerItems = forexPairs.map(item => {
+                const changeClass = item.change > 0 ? 'price-up' : item.change < 0 ? 'price-down' : 'price-neutral';
+                const changeSymbol = item.change > 0 ? '+' : '';
+                
+                return `
+                    <div class="ticker-item">
+                        <span class="text-white font-medium mr-2">${item.pair}</span>
+                        <span class="text-white mr-2">${item.price.toFixed(item.pair.includes('JPY') ? 2 : 4)}</span>
+                        <span class="${changeClass} text-sm">
+                            ${changeSymbol}${item.change.toFixed(4)} (${changeSymbol}${item.changePercent.toFixed(2)}%)
+                        </span>
+                    </div>
+                `;
+            }).join('');
+            
+            forexTickerContent.innerHTML = tickerItems + tickerItems; // Duplicate for seamless loop
+        };
+
+        // Update forex ticker with random price movements
+        const updateForexTicker = () => {
+            forexPairs.forEach(pair => {
+                const volatility = 0.001; // 0.1% volatility
+                const randomChange = (Math.random() - 0.5) * 2 * volatility;
+                pair.change = randomChange * pair.price;
+                pair.changePercent = randomChange * 100;
+                pair.price += pair.change;
+            });
+            initForexTicker();
+        };
+
+        // Hero Slider functionality
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let sliderInterval;
+
+        const updateSlider = () => {
+            const sliderContainer = document.getElementById('slider-container');
+            const dots = document.querySelectorAll('.slide-dot');
+            
+            if (sliderContainer) {
+                sliderContainer.style.transform = `translateX(-${currentSlide * 20}%)`;
+            }
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        };
+
+        const goToSlide = (slideIndex) => {
+            currentSlide = slideIndex;
+            updateSlider();
+            resetSliderInterval();
+        };
+
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        };
+
+        const resetSliderInterval = () => {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        };
+
+        const initHeroSlider = () => {
+            updateSlider();
+            resetSliderInterval();
+        };
 
         // Function to hide all main content sections
         const hideAllSections = () => {
@@ -971,7 +1248,7 @@
             ctaSection.classList.remove('hidden');
             mainFooter.classList.remove('hidden');
 
-            navButtons.classList.remove('hidden');
+            hideUserProfile(); // Hide user profile section when showing landing page
             mobileMenuToggle.classList.add('hidden');
             bottomNav.classList.add('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden if open
@@ -981,8 +1258,13 @@
         const showLoginSection = () => {
             hideAllSections(); // Hide all sections first
             loginSlide.classList.remove('hidden', 'translate-x-full');
-            // Animate in
-            gsap.fromTo(loginSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            // Simple animation fallback when GSAP is not available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(loginSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            } else {
+                loginSlide.style.transform = 'translateX(0)';
+                loginSlide.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+            }
 
             navButtons.classList.add('hidden');
             mobileMenuToggle.classList.remove('hidden');
@@ -994,8 +1276,13 @@
         const showRegisterSection = () => {
             hideAllSections(); // Hide all sections first
             registerSlide.classList.remove('hidden', 'translate-x-full');
-            // Animate in
-            gsap.fromTo(registerSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            // Simple animation fallback when GSAP is not available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(registerSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            } else {
+                registerSlide.style.transform = 'translateX(0)';
+                registerSlide.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+            }
 
             navButtons.classList.add('hidden');
             mobileMenuToggle.classList.remove('hidden');
@@ -1007,8 +1294,13 @@
         const showResetPasswordSection = () => {
             hideAllSections(); // Hide all sections first
             resetPasswordSlide.classList.remove('hidden', 'translate-x-full');
-            // Animate in
-            gsap.fromTo(resetPasswordSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            // Simple animation fallback when GSAP is not available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(resetPasswordSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            } else {
+                resetPasswordSlide.style.transform = 'translateX(0)';
+                resetPasswordSlide.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+            }
 
             navButtons.classList.add('hidden');
             mobileMenuToggle.classList.remove('hidden');
@@ -1020,7 +1312,13 @@
         const toggleMobileMenu = () => {
             if (mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.remove('hidden');
-                gsap.from(mobileMenu, { opacity: 0, y: -20, duration: 0.3 });
+                if (typeof gsap !== 'undefined') {
+                    gsap.from(mobileMenu, { opacity: 0, y: -20, duration: 0.3 });
+                } else {
+                    mobileMenu.style.opacity = '1';
+                    mobileMenu.style.transform = 'translateY(0)';
+                    mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                }
             } else {
                 mobileMenu.classList.add('hidden');
             }
@@ -1030,10 +1328,15 @@
         const showDashboard = () => {
             hideAllSections(); // Hide all sections first
             dashboardSlide.classList.remove('hidden', 'translate-x-full');
-            // Animate in
-            gsap.fromTo(dashboardSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            // Simple animation fallback when GSAP is not available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(dashboardSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            } else {
+                dashboardSlide.style.transform = 'translateX(0)';
+                dashboardSlide.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+            }
 
-            navButtons.classList.add('hidden');
+            showUserProfile(); // Show user profile section when logged in
             mobileMenuToggle.classList.remove('hidden');
             bottomNav.classList.remove('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden
@@ -1042,10 +1345,15 @@
         const showTrading = () => {
             hideAllSections(); // Hide all sections first
             tradingSlide.classList.remove('hidden', 'translate-x-full');
-            // Animate in
-            gsap.fromTo(tradingSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            // Simple animation fallback when GSAP is not available
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(tradingSlide, { x: '100vw' }, { x: '0vw', duration: 0.8, ease: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+            } else {
+                tradingSlide.style.transform = 'translateX(0)';
+                tradingSlide.style.transition = 'transform 0.8s cubic-bezier(0.77, 0, 0.175, 1)';
+            }
 
-            navButtons.classList.add('hidden');
+            showUserProfile(); // Show user profile section when logged in
             mobileMenuToggle.classList.remove('hidden');
             bottomNav.classList.remove('hidden');
             mobileMenu.classList.add('hidden'); // Ensure mobile menu is hidden
@@ -1176,34 +1484,343 @@
             animate();
         };
 
-        // Initialize 3D trading chart
-        const initTradingChart = () => {
-            const container = document.getElementById('trading-chart-3d');
+        // Comprehensive Watchlist Data
+        const comprehensiveWatchlist = [
+            // Forex Pairs (Major)
+            { symbol: 'EUR/USD', name: 'Euro/US Dollar', category: 'forex', price: 1.0856, change: 0.0012, changePercent: 0.11, favorite: true },
+            { symbol: 'GBP/USD', name: 'British Pound/US Dollar', category: 'forex', price: 1.2645, change: -0.0023, changePercent: -0.18, favorite: false },
+            { symbol: 'USD/JPY', name: 'US Dollar/Japanese Yen', category: 'forex', price: 149.45, change: 0.85, changePercent: 0.57, favorite: true },
+            { symbol: 'AUD/USD', name: 'Australian Dollar/US Dollar', category: 'forex', price: 0.6534, change: 0.0045, changePercent: 0.69, favorite: false },
+            { symbol: 'USD/CAD', name: 'US Dollar/Canadian Dollar', category: 'forex', price: 1.3567, change: -0.0012, changePercent: -0.09, favorite: false },
+            { symbol: 'USD/CHF', name: 'US Dollar/Swiss Franc', category: 'forex', price: 0.8892, change: 0.0034, changePercent: 0.38, favorite: false },
+            { symbol: 'NZD/USD', name: 'New Zealand Dollar/US Dollar', category: 'forex', price: 0.5987, change: 0.0067, changePercent: 1.13, favorite: false },
+            
+            // Forex Pairs (Minor)
+            { symbol: 'EUR/GBP', name: 'Euro/British Pound', category: 'forex', price: 0.8587, change: 0.0023, changePercent: 0.27, favorite: false },
+            { symbol: 'EUR/JPY', name: 'Euro/Japanese Yen', category: 'forex', price: 162.34, change: 1.23, changePercent: 0.76, favorite: false },
+            { symbol: 'GBP/JPY', name: 'British Pound/Japanese Yen', category: 'forex', price: 189.12, change: -0.89, changePercent: -0.47, favorite: false },
+            { symbol: 'AUD/JPY', name: 'Australian Dollar/Japanese Yen', category: 'forex', price: 97.65, change: 1.34, changePercent: 1.39, favorite: false },
+            { symbol: 'CAD/JPY', name: 'Canadian Dollar/Japanese Yen', category: 'forex', price: 110.15, change: 0.67, changePercent: 0.61, favorite: false },
+            { symbol: 'CHF/JPY', name: 'Swiss Franc/Japanese Yen', category: 'forex', price: 168.04, change: 1.45, changePercent: 0.87, favorite: false },
+            
+            // Cryptocurrency
+            { symbol: 'BTC/USD', name: 'Bitcoin', category: 'crypto', price: 43256.78, change: 1234.56, changePercent: 2.94, favorite: true },
+            { symbol: 'ETH/USD', name: 'Ethereum', category: 'crypto', price: 2587.43, change: -45.67, changePercent: -1.73, favorite: true },
+            { symbol: 'ADA/USD', name: 'Cardano', category: 'crypto', price: 0.4523, change: 0.0234, changePercent: 5.45, favorite: false },
+            { symbol: 'SOL/USD', name: 'Solana', category: 'crypto', price: 98.76, change: -2.34, changePercent: -2.31, favorite: false },
+            { symbol: 'DOT/USD', name: 'Polkadot', category: 'crypto', price: 6.78, change: 0.45, changePercent: 7.12, favorite: false },
+            { symbol: 'AVAX/USD', name: 'Avalanche', category: 'crypto', price: 34.56, change: 1.23, changePercent: 3.69, favorite: false },
+            { symbol: 'LINK/USD', name: 'Chainlink', category: 'crypto', price: 14.87, change: -0.67, changePercent: -4.31, favorite: false },
+            
+            // Commodities
+            { symbol: 'XAU/USD', name: 'Gold', category: 'commodities', price: 2034.56, change: 12.45, changePercent: 0.62, favorite: true },
+            { symbol: 'XAG/USD', name: 'Silver', category: 'commodities', price: 24.87, change: -0.34, changePercent: -1.35, favorite: false },
+            { symbol: 'WTI/USD', name: 'Crude Oil WTI', category: 'commodities', price: 78.45, change: 1.23, changePercent: 1.59, favorite: false },
+            { symbol: 'BRENT/USD', name: 'Brent Oil', category: 'commodities', price: 82.67, change: 0.89, changePercent: 1.09, favorite: false },
+            { symbol: 'NG/USD', name: 'Natural Gas', category: 'commodities', price: 2.876, change: -0.045, changePercent: -1.54, favorite: false },
+            
+            // Indices
+            { symbol: 'SPX500', name: 'S&P 500', category: 'indices', price: 4567.89, change: 23.45, changePercent: 0.52, favorite: true },
+            { symbol: 'NAS100', name: 'NASDAQ 100', category: 'indices', price: 15678.34, change: -56.78, changePercent: -0.36, favorite: false },
+            { symbol: 'US30', name: 'Dow Jones', category: 'indices', price: 34567.12, change: 123.45, changePercent: 0.36, favorite: false },
+            { symbol: 'UK100', name: 'FTSE 100', category: 'indices', price: 7456.78, change: -12.34, changePercent: -0.17, favorite: false },
+            { symbol: 'GER30', name: 'DAX', category: 'indices', price: 16234.56, change: 45.67, changePercent: 0.28, favorite: false },
+            { symbol: 'JPN225', name: 'Nikkei 225', category: 'indices', price: 32456.78, change: 234.56, changePercent: 0.73, favorite: false }
+        ];
+
+        let filteredWatchlist = [...comprehensiveWatchlist];
+        let currentSort = 'name';
+
+        // Initialize comprehensive watchlist
+        const initWatchlist = () => {
+            renderWatchlist();
+            setupWatchlistControls();
+        };
+
+        // Render watchlist items
+        const renderWatchlist = () => {
+            const container = document.getElementById('watchlist-container');
             if (!container) return;
 
-            const width = container.offsetWidth;
-            const height = container.offsetHeight;
+            container.innerHTML = filteredWatchlist.map(item => {
+                const changeClass = item.change > 0 ? 'text-green-400' : item.change < 0 ? 'text-red-400' : 'text-gray-400';
+                const changeIcon = item.change > 0 ? '↗' : item.change < 0 ? '↘' : '→';
+                const favoriteIcon = item.favorite ? '★' : '☆';
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-indigo-900 bg-opacity-30 rounded-lg hover:bg-indigo-800 transition-colors cursor-pointer" 
+                         onclick="selectWatchlistItem('${item.symbol}')">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <button onclick="toggleFavorite('${item.symbol}', event)" class="text-yellow-400 hover:text-yellow-300 text-lg">
+                                ${favoriteIcon}
+                            </button>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-white">${item.symbol}</span>
+                                    <span class="text-xs px-2 py-1 bg-indigo-700 rounded text-indigo-200">${item.category.toUpperCase()}</span>
+                                </div>
+                                <div class="text-sm text-gray-400">${item.name}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-medium text-white">${item.price.toFixed(item.symbol.includes('JPY') ? 2 : 4)}</div>
+                            <div class="flex items-center space-x-1 ${changeClass}">
+                                <span class="text-sm">${changeIcon}</span>
+                                <span class="text-sm">${item.changePercent > 0 ? '+' : ''}${item.changePercent.toFixed(2)}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-            camera.position.set(0, 0, 15);
+        // Setup watchlist controls
+        const setupWatchlistControls = () => {
+            const filterSelect = document.getElementById('watchlist-filter');
+            const searchInput = document.getElementById('watchlist-search');
+            const sortNameBtn = document.getElementById('sort-name');
+            const sortPriceBtn = document.getElementById('sort-price');
+            const sortChangeBtn = document.getElementById('sort-change');
 
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-
-            // Create candlestick chart geometry
-            const createCandlestick = (o, h, l, c, x) => {
-                const group = new THREE.Group();
-
-                // Wick
-                const wickGeometry = new THREE.BoxGeometry(0.1, h - l, 0.1);
-                const wickMaterial = new THREE.MeshBasicMaterial({
-                    color: c > o ? 0x00ff00 : 0xff0000
+            if (filterSelect) {
+                filterSelect.addEventListener('change', (e) => {
+                    filterWatchlist(e.target.value);
                 });
-                const wick = new THREE.Mesh(wickGeometry, wickMaterial);
-                wick.position.y = (h + l) / 2;
-                wick.position.x = x;
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchWatchlist(e.target.value);
+                });
+            }
+
+            if (sortNameBtn) {
+                sortNameBtn.addEventListener('click', () => sortWatchlist('name'));
+            }
+            if (sortPriceBtn) {
+                sortPriceBtn.addEventListener('click', () => sortWatchlist('price'));
+            }
+            if (sortChangeBtn) {
+                sortChangeBtn.addEventListener('click', () => sortWatchlist('change'));
+            }
+        };
+
+        // Filter watchlist by category
+        const filterWatchlist = (category) => {
+            if (category === 'all') {
+                filteredWatchlist = [...comprehensiveWatchlist];
+            } else {
+                filteredWatchlist = comprehensiveWatchlist.filter(item => item.category === category);
+            }
+            renderWatchlist();
+        };
+
+        // Search watchlist
+        const searchWatchlist = (query) => {
+            if (!query) {
+                const category = document.getElementById('watchlist-filter')?.value || 'all';
+                filterWatchlist(category);
+                return;
+            }
+
+            const searchTerm = query.toLowerCase();
+            filteredWatchlist = comprehensiveWatchlist.filter(item => 
+                item.symbol.toLowerCase().includes(searchTerm) || 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+            renderWatchlist();
+        };
+
+        // Sort watchlist
+        const sortWatchlist = (field) => {
+            currentSort = field;
+            
+            filteredWatchlist.sort((a, b) => {
+                switch (field) {
+                    case 'name':
+                        return a.symbol.localeCompare(b.symbol);
+                    case 'price':
+                        return b.price - a.price;
+                    case 'change':
+                        return b.changePercent - a.changePercent;
+                    default:
+                        return 0;
+                }
+            });
+            
+            renderWatchlist();
+        };
+
+        // Toggle favorite status
+        const toggleFavorite = (symbol, event) => {
+            event.stopPropagation();
+            const item = comprehensiveWatchlist.find(item => item.symbol === symbol);
+            if (item) {
+                item.favorite = !item.favorite;
+                renderWatchlist();
+            }
+        };
+
+        // Select watchlist item
+        const selectWatchlistItem = (symbol) => {
+            // Update trading symbol and switch to trading view
+            updateTradingSymbol(symbol);
+            showTrading();
+        };
+
+        // Update watchlist with real-time price changes
+        const updateWatchlistPrices = () => {
+            comprehensiveWatchlist.forEach(item => {
+                const volatility = item.category === 'crypto' ? 0.02 : 
+                                 item.category === 'forex' ? 0.005 : 0.01;
+                const randomChange = (Math.random() - 0.5) * 2 * volatility;
+                item.change = randomChange * item.price;
+                item.changePercent = randomChange * 100;
+                item.price += item.change;
+            });
+            
+            if (document.getElementById('watchlist-container')) {
+                renderWatchlist();
+            }
+        };
+        let tradingViewWidget = null;
+        let currentSymbol = 'EURUSD';
+        let currentTimeframe = '1D';
+
+        const initTradingViewChart = () => {
+            const container = document.getElementById('tradingview-widget');
+            if (!container) return;
+
+            // Clear existing widget
+            container.innerHTML = '';
+
+            // Create a fallback chart since TradingView widget might be blocked
+            createFallbackChart(container);
+        };
+
+        const createFallbackChart = (container) => {
+            // Create a sophisticated fallback chart using Canvas API
+            const canvas = document.createElement('canvas');
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            container.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            
+            // Generate sample forex data
+            const generateForexData = () => {
+                const data = [];
+                let price = 1.0856; // Starting EUR/USD price
+                
+                for (let i = 0; i < 100; i++) {
+                    const change = (Math.random() - 0.5) * 0.01;
+                    price += change;
+                    data.push({
+                        time: i,
+                        price: price,
+                        volume: Math.random() * 1000000
+                    });
+                }
+                return data;
+            };
+
+            const drawChart = () => {
+                const data = generateForexData();
+                const padding = 40;
+                const chartWidth = canvas.width - 2 * padding;
+                const chartHeight = canvas.height - 2 * padding;
+
+                // Clear canvas
+                ctx.fillStyle = '#1a1a2e';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Find min/max prices
+                const prices = data.map(d => d.price);
+                const minPrice = Math.min(...prices);
+                const maxPrice = Math.max(...prices);
+                const priceRange = maxPrice - minPrice;
+
+                // Draw grid
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 1;
+                for (let i = 0; i <= 10; i++) {
+                    const y = padding + (i / 10) * chartHeight;
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(canvas.width - padding, y);
+                    ctx.stroke();
+                }
+
+                // Draw price line
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                data.forEach((point, index) => {
+                    const x = padding + (index / (data.length - 1)) * chartWidth;
+                    const y = padding + chartHeight - ((point.price - minPrice) / priceRange) * chartHeight;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                ctx.stroke();
+
+                // Draw price labels
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                for (let i = 0; i <= 5; i++) {
+                    const price = minPrice + (i / 5) * priceRange;
+                    const y = padding + chartHeight - (i / 5) * chartHeight;
+                    ctx.fillText(price.toFixed(4), padding - 5, y + 4);
+                }
+
+                // Draw current price
+                const currentPrice = prices[prices.length - 1];
+                ctx.fillStyle = '#22c55e';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`${currentSymbol}: ${currentPrice.toFixed(4)}`, padding, 30);
+            };
+
+            drawChart();
+
+            // Update chart every few seconds
+            setInterval(() => {
+                drawChart();
+            }, 3000);
+        };
+
+        const changeTimeframe = (timeframe) => {
+            currentTimeframe = timeframe;
+            initTradingViewChart();
+        };
+
+        const updateTradingSymbol = (symbol) => {
+            currentSymbol = symbol;
+            initTradingViewChart();
+        };
+
+        const toggleFullscreen = () => {
+            const container = document.getElementById('tradingview-widget');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    alert('Error attempting to enable fullscreen mode: ' + err.message);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        };
+
+        const toggleIndicators = () => {
+            // Placeholder for indicator toggle functionality
+            alert('Technical indicators panel - Coming soon!');
+        };
 
                 // Body
                 const bodyHeight = Math.max(0.2, Math.abs(c - o));
@@ -1306,28 +1923,57 @@
             }
         };
 
-        // Update trading pair data
-        const updateTradingPair = async (pair) => {
-            try {
-                const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/X:${pair.replace('/', '-')}/prev?adjusted=true&apiKey=${POLYGON_API_KEY}`);
-                const data = await response.json();
-                const price = data.results?.[0]?.c;
-                if (price) {
-                    document.querySelector('#trading-slide .input-field[placeholder="Market Price"]').value = price;
-                }
-            } catch (error) {
-                console.error('Error updating trading pair:', error);
-            }
+        // Navigation functions for new menu items
+        const showMarkets = () => {
+            // Placeholder for Markets section
+            alert('Markets section - Coming soon!');
+        };
+
+        const showAnalysis = () => {
+            // Placeholder for Analysis section
+            alert('Analysis section - Coming soon!');
+        };
+
+        const showEducation = () => {
+            // Placeholder for Education section
+            alert('Education section - Coming soon!');
+        };
+
+        const showDeposit = () => {
+            // Placeholder for Deposit functionality
+            alert('Deposit functionality - Coming soon!');
+        };
+
+        const showWithdraw = () => {
+            // Placeholder for Withdraw functionality
+            alert('Withdraw functionality - Coming soon!');
+        };
+
+        // Function to show user profile section (when logged in)
+        const showUserProfile = () => {
+            navButtons.classList.add('hidden');
+            userProfileSection.classList.remove('hidden');
+        };
+
+        // Function to hide user profile section (when logged out)
+        const hideUserProfile = () => {
+            navButtons.classList.remove('hidden');
+            userProfileSection.classList.add('hidden');
         };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             showLandingPage(); // Start with the landing page
+            initForexTicker(); // Initialize forex ticker
+            initHeroSlider(); // Initialize hero slider
+            initWatchlist(); // Initialize comprehensive watchlist
             init3DView();
-            initTradingChart();
+            initTradingViewChart(); // Initialize TradingView chart
             animateElements();
             fetchCryptoPrices();
             setInterval(fetchCryptoPrices, 60000); // Update every minute
+            setInterval(updateForexTicker, 5000); // Update forex ticker every 5 seconds
+            setInterval(updateWatchlistPrices, 10000); // Update watchlist every 10 seconds
 
             // Sample login form validation
             document.getElementById('login-form').addEventListener('submit', (e) => {
