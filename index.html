@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForexPro - Your Premier Trading Platform</title>
+    <title>m4capital - Your Premier Trading Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -214,6 +214,74 @@
         .price-neutral {
             color: #6b7280;
         }
+
+        /* Hero Slider Styles */
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slider-container {
+            position: relative;
+            width: 500%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .slider-slide {
+            width: 20%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .slide-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 3;
+        }
+        
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .slide-dot.active {
+            background: white;
+        }
     </style>
 </head>
 <body>
@@ -294,29 +362,128 @@
     <!-- Main Content Container -->
     <div id="main-content-container" class="relative pt-24 h-screen overflow-x-hidden flex-grow">
         <!-- Landing Page Section -->
-        <section id="landing-section" class="hero-section flex-grow flex items-center justify-center text-center py-20 md:py-32">
-            <div class="content-wrapper container mx-auto px-4">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Trade Smarter, Not Harder.
-                </h1>
-                <p class="text-lg md:text-xl text-indigo-200 mb-10 max-w-3xl mx-auto">
-                    Unlock the power of global markets with ForexPro. Real-time data, advanced tools, and secure trading at your fingertips.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#" onclick="showLoginSection()" class="btn px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-primary transform hover:scale-105">
-                        Start Trading Now
-                    </a>
-                    <a href="#" class="btn px-8 py-4 border-2 border-accent text-accent rounded-full font-bold text-lg hover:bg-accent hover:text-white transform hover:scale-105">
-                        Learn More
-                    </a>
+        <section id="landing-section" class="hero-slider">
+            <div class="slider-container" id="slider-container">
+                <!-- Slide 1: Advanced Trading Charts -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%233b82f6&quot; opacity=&quot;0.1&quot;><path d=&quot;M100 400L300 300L500 350L700 250L900 200L1100 300L1300 150L1500 250L1700 200L1900 300&quot; stroke=&quot;%233b82f6&quot; stroke-width=&quot;3&quot; fill=&quot;none&quot;/><circle cx=&quot;100&quot; cy=&quot;400&quot; r=&quot;5&quot;/><circle cx=&quot;300&quot; cy=&quot;300&quot; r=&quot;5&quot;/><circle cx=&quot;500&quot; cy=&quot;350&quot; r=&quot;5&quot;/><circle cx=&quot;700&quot; cy=&quot;250&quot; r=&quot;5&quot;/><circle cx=&quot;900&quot; cy=&quot;200&quot; r=&quot;5&quot;/><circle cx=&quot;1100&quot; cy=&quot;300&quot; r=&quot;5&quot;/><circle cx=&quot;1300&quot; cy=&quot;150&quot; r=&quot;5&quot;/><circle cx=&quot;1500&quot; cy=&quot;250&quot; r=&quot;5&quot;/><circle cx=&quot;1700&quot; cy=&quot;200&quot; r=&quot;5&quot;/><circle cx=&quot;1900&quot; cy=&quot;300&quot; r=&quot;5&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Advanced Trading Charts
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Professional-grade charting tools with real-time data visualization and technical analysis
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showLoginSection()" class="btn px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-primary transform hover:scale-105">
+                                Start Trading Now
+                            </a>
+                            <a href="#" onclick="showEducation()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Slide 2: Forex Trading -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%23f59e0b&quot;><text x=&quot;200&quot; y=&quot;200&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>EUR</text><text x=&quot;600&quot; y=&quot;300&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>USD</text><text x=&quot;1200&quot; y=&quot;250&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>GBP</text><text x=&quot;300&quot; y=&quot;600&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>JPY</text><text x=&quot;1000&quot; y=&quot;700&quot; font-size=&quot;120&quot; font-weight=&quot;bold&quot; opacity=&quot;0.1&quot;>AUD</text></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Forex Market Access
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Trade major, minor, and exotic currency pairs with tight spreads and instant execution
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showMarkets()" class="btn px-8 py-4 bg-gradient-to-r from-accent to-secondary rounded-full text-white font-bold text-lg shadow-xl hover:from-secondary hover:to-accent transform hover:scale-105">
+                                View Markets
+                            </a>
+                            <a href="#" onclick="showTrading()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Start Trading
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Portfolio Management -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g><rect x=&quot;300&quot; y=&quot;300&quot; width=&quot;200&quot; height=&quot;400&quot; fill=&quot;%2322c55e&quot; opacity=&quot;0.2&quot;/><rect x=&quot;600&quot; y=&quot;200&quot; width=&quot;200&quot; height=&quot;500&quot; fill=&quot;%233b82f6&quot; opacity=&quot;0.2&quot;/><rect x=&quot;900&quot; y=&quot;400&quot; width=&quot;200&quot; height=&quot;300&quot; fill=&quot;%23f59e0b&quot; opacity=&quot;0.2&quot;/><rect x=&quot;1200&quot; y=&quot;250&quot; width=&quot;200&quot; height=&quot;450&quot; fill=&quot;%23ef4444&quot; opacity=&quot;0.2&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Portfolio Management
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Track your investments, analyze performance, and manage risk with our comprehensive dashboard
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showDashboard()" class="btn px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-blue-600 hover:to-green-600 transform hover:scale-105">
+                                View Dashboard
+                            </a>
+                            <a href="#" onclick="showAnalysis()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Analyze Performance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Educational Resources -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%238338ec&quot; opacity=&quot;0.15&quot;><circle cx=&quot;400&quot; cy=&quot;300&quot; r=&quot;80&quot;/><circle cx=&quot;800&quot; cy=&quot;400&quot; r=&quot;60&quot;/><circle cx=&quot;1200&quot; cy=&quot;250&quot; r=&quot;100&quot;/><circle cx=&quot;600&quot; cy=&quot;600&quot; r=&quot;70&quot;/><circle cx=&quot;1400&quot; cy=&quot;500&quot; r=&quot;90&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Learn & Grow
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Access comprehensive educational resources, market analysis, and trading strategies
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showEducation()" class="btn px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-pink-600 hover:to-purple-600 transform hover:scale-105">
+                                Start Learning
+                            </a>
+                            <a href="#" onclick="showAnalysis()" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Market Analysis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Security & Trust -->
+                <div class="slider-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1920 1080&quot;><rect fill=&quot;%23141529&quot; width=&quot;1920&quot; height=&quot;1080&quot;/><g fill=&quot;%2322c55e&quot; opacity=&quot;0.1&quot;><polygon points=&quot;960,200 1100,400 960,600 820,400&quot;/><polygon points=&quot;500,300 600,450 500,600 400,450&quot;/><polygon points=&quot;1400,250 1500,400 1400,550 1300,400&quot;/></g></svg>');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                            Secure & Trusted
+                        </h1>
+                        <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                            Your funds and data are protected with bank-level security and regulatory compliance
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" onclick="showRegisterSection()" class="btn px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 rounded-full text-white font-bold text-lg shadow-xl hover:from-teal-600 hover:to-green-600 transform hover:scale-105">
+                                Open Account
+                            </a>
+                            <a href="#" class="btn px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-dark transform hover:scale-105">
+                                Security Info
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="slide-dots" id="slide-dots">
+                <div class="slide-dot active" onclick="goToSlide(0)"></div>
+                <div class="slide-dot" onclick="goToSlide(1)"></div>
+                <div class="slide-dot" onclick="goToSlide(2)"></div>
+                <div class="slide-dot" onclick="goToSlide(3)"></div>
+                <div class="slide-dot" onclick="goToSlide(4)"></div>
             </div>
         </section>
 
         <!-- Features Section (from landing page) -->
         <section id="features-section" class="py-16 bg-dark">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-light">Why Choose ForexPro?</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-light">Why Choose m4capital?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="feature-card p-8 rounded-2xl border border-indigo-800 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-primary mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -348,7 +515,7 @@
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Trading Journey?</h2>
                 <p class="text-lg text-indigo-100 mb-8 max-w-2xl mx-auto">
-                    Join thousands of traders who trust ForexPro for their financial success.
+                    Join thousands of traders who trust m4capital for their financial success.
                 </p>
                 <a href="#" onclick="showRegisterSection()" class="btn px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-semibold shadow-lg hover:from-secondary hover:to-primary">
                     Sign Up Free
@@ -994,7 +1161,7 @@
     <!-- Footer -->
     <footer id="main-footer" class="bg-dark py-8 border-t border-indigo-900">
         <div class="container mx-auto px-4 text-center text-indigo-400">
-            <p>&copy; 2024 ForexPro. All rights reserved.</p>
+            <p>&copy; 2024 m4capital. All rights reserved.</p>
             <div class="flex justify-center space-x-4 mt-4">
                 <a href="#" class="hover:text-light">Privacy Policy</a>
                 <span class="text-indigo-600">|</span>
@@ -1077,6 +1244,46 @@
                 pair.price += pair.change;
             });
             initForexTicker();
+        };
+
+        // Hero Slider functionality
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let sliderInterval;
+
+        const updateSlider = () => {
+            const sliderContainer = document.getElementById('slider-container');
+            const dots = document.querySelectorAll('.slide-dot');
+            
+            if (sliderContainer) {
+                sliderContainer.style.transform = `translateX(-${currentSlide * 20}%)`;
+            }
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        };
+
+        const goToSlide = (slideIndex) => {
+            currentSlide = slideIndex;
+            updateSlider();
+            resetSliderInterval();
+        };
+
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        };
+
+        const resetSliderInterval = () => {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        };
+
+        const initHeroSlider = () => {
+            updateSlider();
+            resetSliderInterval();
         };
 
         // Function to hide all main content sections
@@ -1492,6 +1699,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             showLandingPage(); // Start with the landing page
             initForexTicker(); // Initialize forex ticker
+            initHeroSlider(); // Initialize hero slider
             init3DView();
             initTradingChart();
             animateElements();
