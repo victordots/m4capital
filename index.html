@@ -828,108 +828,36 @@
                     </div>
                 </div>
 
-                <!-- Assets Grid -->
+                <!-- Comprehensive Watchlist -->
                 <div class="mb-8">
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-semibold text-light">Your Assets</h2>
-                        <button class="btn text-sm text-primary hover:underline">View All</button>
+                        <h2 class="text-xl font-semibold text-light">Comprehensive Watchlist</h2>
+                        <div class="flex items-center space-x-4">
+                            <select id="watchlist-filter" class="bg-dark border border-indigo-700 text-white rounded px-3 py-1 text-sm">
+                                <option value="all">All Instruments</option>
+                                <option value="forex">Forex Pairs</option>
+                                <option value="crypto">Cryptocurrency</option>
+                                <option value="commodities">Commodities</option>
+                                <option value="indices">Indices</option>
+                            </select>
+                            <button class="btn text-sm text-primary hover:underline">View All</button>
+                        </div>
                     </div>
 
-                    <div class="dashboard-grid grid grid-cols-2 gap-4">
-                        <!-- Asset Card 1 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c981ddbd-d333-493c-aa48-ce7a0e569200.png" alt="Bitcoin BTC logo" class="h-6 w-6">
-                                        <span class="font-medium text-light" data-pair="BTC-USD">BTC/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Bitcoin</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary asset-price">$23,456.78</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+1.23%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
+                    <!-- Search and Sort Controls -->
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex-1">
+                            <input type="text" id="watchlist-search" placeholder="Search instruments..." class="w-full bg-dark border border-indigo-700 text-white rounded px-3 py-2 text-sm">
                         </div>
+                        <button id="sort-name" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Name</button>
+                        <button id="sort-price" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Price</button>
+                        <button id="sort-change" class="text-sm text-indigo-300 hover:text-white transition-colors">Sort by Change</button>
+                    </div>
 
-                        <!-- Asset Card 2 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9f94bff5-1345-4537-84fb-82ffd505406f.png" alt="Ethereum ETH logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">ETH/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Ethereum</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">$1,789.23</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+3.45%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
-
-                        <!-- Asset Card 3 - Add more cards for other currencies -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9cc4ef04-f66b-49ad-9cf3-01ecf3765679.png" alt="EUR/USD Forex pair logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">EUR/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Euro/Dollar</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">1.0956</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                        </svg>
-                                        <span class="text-xs text-red-400 ml-1">-0.12%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
-
-                        <!-- Asset Card 4 -->
-                        <div class="dashboard-section bg-indigo-900 bg-opacity-50 rounded-xl p-4 border border-indigo-800 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fc84d3cd-e078-42c9-ac5d-f32ae1b4ef6c.png" alt="Gold XAU logo" class="h-6 w-6">
-                                        <span class="font-medium text-light">XAU/USD</span>
-                                    </div>
-                                    <span class="text-xs text-indigo-300">Gold</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-sm font-medium text-primary">$1,980.45</span>
-                                    <div class="flex justify-end items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                        </svg>
-                                        <span class="text-xs text-accent ml-1">+0.78%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-placeholder mt-2 h-16 rounded-md"></div>
-                        </div>
+                    <div id="watchlist-container" class="space-y-2 max-h-96 overflow-y-auto">
+                        <!-- Watchlist items will be populated by JavaScript -->
                     </div>
                 </div>
-
                 <!-- Recent Activity -->
                 <div class="mb-8">
                     <h2 class="text-xl font-semibold text-light mb-4">Recent Activity</h2>
@@ -1556,7 +1484,205 @@
             animate();
         };
 
-        // TradingView Chart Integration
+        // Comprehensive Watchlist Data
+        const comprehensiveWatchlist = [
+            // Forex Pairs (Major)
+            { symbol: 'EUR/USD', name: 'Euro/US Dollar', category: 'forex', price: 1.0856, change: 0.0012, changePercent: 0.11, favorite: true },
+            { symbol: 'GBP/USD', name: 'British Pound/US Dollar', category: 'forex', price: 1.2645, change: -0.0023, changePercent: -0.18, favorite: false },
+            { symbol: 'USD/JPY', name: 'US Dollar/Japanese Yen', category: 'forex', price: 149.45, change: 0.85, changePercent: 0.57, favorite: true },
+            { symbol: 'AUD/USD', name: 'Australian Dollar/US Dollar', category: 'forex', price: 0.6534, change: 0.0045, changePercent: 0.69, favorite: false },
+            { symbol: 'USD/CAD', name: 'US Dollar/Canadian Dollar', category: 'forex', price: 1.3567, change: -0.0012, changePercent: -0.09, favorite: false },
+            { symbol: 'USD/CHF', name: 'US Dollar/Swiss Franc', category: 'forex', price: 0.8892, change: 0.0034, changePercent: 0.38, favorite: false },
+            { symbol: 'NZD/USD', name: 'New Zealand Dollar/US Dollar', category: 'forex', price: 0.5987, change: 0.0067, changePercent: 1.13, favorite: false },
+            
+            // Forex Pairs (Minor)
+            { symbol: 'EUR/GBP', name: 'Euro/British Pound', category: 'forex', price: 0.8587, change: 0.0023, changePercent: 0.27, favorite: false },
+            { symbol: 'EUR/JPY', name: 'Euro/Japanese Yen', category: 'forex', price: 162.34, change: 1.23, changePercent: 0.76, favorite: false },
+            { symbol: 'GBP/JPY', name: 'British Pound/Japanese Yen', category: 'forex', price: 189.12, change: -0.89, changePercent: -0.47, favorite: false },
+            { symbol: 'AUD/JPY', name: 'Australian Dollar/Japanese Yen', category: 'forex', price: 97.65, change: 1.34, changePercent: 1.39, favorite: false },
+            { symbol: 'CAD/JPY', name: 'Canadian Dollar/Japanese Yen', category: 'forex', price: 110.15, change: 0.67, changePercent: 0.61, favorite: false },
+            { symbol: 'CHF/JPY', name: 'Swiss Franc/Japanese Yen', category: 'forex', price: 168.04, change: 1.45, changePercent: 0.87, favorite: false },
+            
+            // Cryptocurrency
+            { symbol: 'BTC/USD', name: 'Bitcoin', category: 'crypto', price: 43256.78, change: 1234.56, changePercent: 2.94, favorite: true },
+            { symbol: 'ETH/USD', name: 'Ethereum', category: 'crypto', price: 2587.43, change: -45.67, changePercent: -1.73, favorite: true },
+            { symbol: 'ADA/USD', name: 'Cardano', category: 'crypto', price: 0.4523, change: 0.0234, changePercent: 5.45, favorite: false },
+            { symbol: 'SOL/USD', name: 'Solana', category: 'crypto', price: 98.76, change: -2.34, changePercent: -2.31, favorite: false },
+            { symbol: 'DOT/USD', name: 'Polkadot', category: 'crypto', price: 6.78, change: 0.45, changePercent: 7.12, favorite: false },
+            { symbol: 'AVAX/USD', name: 'Avalanche', category: 'crypto', price: 34.56, change: 1.23, changePercent: 3.69, favorite: false },
+            { symbol: 'LINK/USD', name: 'Chainlink', category: 'crypto', price: 14.87, change: -0.67, changePercent: -4.31, favorite: false },
+            
+            // Commodities
+            { symbol: 'XAU/USD', name: 'Gold', category: 'commodities', price: 2034.56, change: 12.45, changePercent: 0.62, favorite: true },
+            { symbol: 'XAG/USD', name: 'Silver', category: 'commodities', price: 24.87, change: -0.34, changePercent: -1.35, favorite: false },
+            { symbol: 'WTI/USD', name: 'Crude Oil WTI', category: 'commodities', price: 78.45, change: 1.23, changePercent: 1.59, favorite: false },
+            { symbol: 'BRENT/USD', name: 'Brent Oil', category: 'commodities', price: 82.67, change: 0.89, changePercent: 1.09, favorite: false },
+            { symbol: 'NG/USD', name: 'Natural Gas', category: 'commodities', price: 2.876, change: -0.045, changePercent: -1.54, favorite: false },
+            
+            // Indices
+            { symbol: 'SPX500', name: 'S&P 500', category: 'indices', price: 4567.89, change: 23.45, changePercent: 0.52, favorite: true },
+            { symbol: 'NAS100', name: 'NASDAQ 100', category: 'indices', price: 15678.34, change: -56.78, changePercent: -0.36, favorite: false },
+            { symbol: 'US30', name: 'Dow Jones', category: 'indices', price: 34567.12, change: 123.45, changePercent: 0.36, favorite: false },
+            { symbol: 'UK100', name: 'FTSE 100', category: 'indices', price: 7456.78, change: -12.34, changePercent: -0.17, favorite: false },
+            { symbol: 'GER30', name: 'DAX', category: 'indices', price: 16234.56, change: 45.67, changePercent: 0.28, favorite: false },
+            { symbol: 'JPN225', name: 'Nikkei 225', category: 'indices', price: 32456.78, change: 234.56, changePercent: 0.73, favorite: false }
+        ];
+
+        let filteredWatchlist = [...comprehensiveWatchlist];
+        let currentSort = 'name';
+
+        // Initialize comprehensive watchlist
+        const initWatchlist = () => {
+            renderWatchlist();
+            setupWatchlistControls();
+        };
+
+        // Render watchlist items
+        const renderWatchlist = () => {
+            const container = document.getElementById('watchlist-container');
+            if (!container) return;
+
+            container.innerHTML = filteredWatchlist.map(item => {
+                const changeClass = item.change > 0 ? 'text-green-400' : item.change < 0 ? 'text-red-400' : 'text-gray-400';
+                const changeIcon = item.change > 0 ? '↗' : item.change < 0 ? '↘' : '→';
+                const favoriteIcon = item.favorite ? '★' : '☆';
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-indigo-900 bg-opacity-30 rounded-lg hover:bg-indigo-800 transition-colors cursor-pointer" 
+                         onclick="selectWatchlistItem('${item.symbol}')">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <button onclick="toggleFavorite('${item.symbol}', event)" class="text-yellow-400 hover:text-yellow-300 text-lg">
+                                ${favoriteIcon}
+                            </button>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-white">${item.symbol}</span>
+                                    <span class="text-xs px-2 py-1 bg-indigo-700 rounded text-indigo-200">${item.category.toUpperCase()}</span>
+                                </div>
+                                <div class="text-sm text-gray-400">${item.name}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-medium text-white">${item.price.toFixed(item.symbol.includes('JPY') ? 2 : 4)}</div>
+                            <div class="flex items-center space-x-1 ${changeClass}">
+                                <span class="text-sm">${changeIcon}</span>
+                                <span class="text-sm">${item.changePercent > 0 ? '+' : ''}${item.changePercent.toFixed(2)}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        // Setup watchlist controls
+        const setupWatchlistControls = () => {
+            const filterSelect = document.getElementById('watchlist-filter');
+            const searchInput = document.getElementById('watchlist-search');
+            const sortNameBtn = document.getElementById('sort-name');
+            const sortPriceBtn = document.getElementById('sort-price');
+            const sortChangeBtn = document.getElementById('sort-change');
+
+            if (filterSelect) {
+                filterSelect.addEventListener('change', (e) => {
+                    filterWatchlist(e.target.value);
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchWatchlist(e.target.value);
+                });
+            }
+
+            if (sortNameBtn) {
+                sortNameBtn.addEventListener('click', () => sortWatchlist('name'));
+            }
+            if (sortPriceBtn) {
+                sortPriceBtn.addEventListener('click', () => sortWatchlist('price'));
+            }
+            if (sortChangeBtn) {
+                sortChangeBtn.addEventListener('click', () => sortWatchlist('change'));
+            }
+        };
+
+        // Filter watchlist by category
+        const filterWatchlist = (category) => {
+            if (category === 'all') {
+                filteredWatchlist = [...comprehensiveWatchlist];
+            } else {
+                filteredWatchlist = comprehensiveWatchlist.filter(item => item.category === category);
+            }
+            renderWatchlist();
+        };
+
+        // Search watchlist
+        const searchWatchlist = (query) => {
+            if (!query) {
+                const category = document.getElementById('watchlist-filter')?.value || 'all';
+                filterWatchlist(category);
+                return;
+            }
+
+            const searchTerm = query.toLowerCase();
+            filteredWatchlist = comprehensiveWatchlist.filter(item => 
+                item.symbol.toLowerCase().includes(searchTerm) || 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+            renderWatchlist();
+        };
+
+        // Sort watchlist
+        const sortWatchlist = (field) => {
+            currentSort = field;
+            
+            filteredWatchlist.sort((a, b) => {
+                switch (field) {
+                    case 'name':
+                        return a.symbol.localeCompare(b.symbol);
+                    case 'price':
+                        return b.price - a.price;
+                    case 'change':
+                        return b.changePercent - a.changePercent;
+                    default:
+                        return 0;
+                }
+            });
+            
+            renderWatchlist();
+        };
+
+        // Toggle favorite status
+        const toggleFavorite = (symbol, event) => {
+            event.stopPropagation();
+            const item = comprehensiveWatchlist.find(item => item.symbol === symbol);
+            if (item) {
+                item.favorite = !item.favorite;
+                renderWatchlist();
+            }
+        };
+
+        // Select watchlist item
+        const selectWatchlistItem = (symbol) => {
+            // Update trading symbol and switch to trading view
+            updateTradingSymbol(symbol);
+            showTrading();
+        };
+
+        // Update watchlist with real-time price changes
+        const updateWatchlistPrices = () => {
+            comprehensiveWatchlist.forEach(item => {
+                const volatility = item.category === 'crypto' ? 0.02 : 
+                                 item.category === 'forex' ? 0.005 : 0.01;
+                const randomChange = (Math.random() - 0.5) * 2 * volatility;
+                item.change = randomChange * item.price;
+                item.changePercent = randomChange * 100;
+                item.price += item.change;
+            });
+            
+            if (document.getElementById('watchlist-container')) {
+                renderWatchlist();
+            }
+        };
         let tradingViewWidget = null;
         let currentSymbol = 'EURUSD';
         let currentTimeframe = '1D';
@@ -1840,12 +1966,14 @@
             showLandingPage(); // Start with the landing page
             initForexTicker(); // Initialize forex ticker
             initHeroSlider(); // Initialize hero slider
+            initWatchlist(); // Initialize comprehensive watchlist
             init3DView();
             initTradingViewChart(); // Initialize TradingView chart
             animateElements();
             fetchCryptoPrices();
             setInterval(fetchCryptoPrices, 60000); // Update every minute
             setInterval(updateForexTicker, 5000); // Update forex ticker every 5 seconds
+            setInterval(updateWatchlistPrices, 10000); // Update watchlist every 10 seconds
 
             // Sample login form validation
             document.getElementById('login-form').addEventListener('submit', (e) => {
